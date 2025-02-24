@@ -43,25 +43,28 @@ export default {
     const petId = this.$route.params.id;
     await this.fetchPet(petId);
   },
-  methods: {
-    async fetchPet(petId) {
-      try {
-        const response = await fetch(`${this.backendUrl}/api/view-pet/${petId}`);
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        this.pet = data;
-      } catch (err) {
-        console.error('Ошибка при получении данных питомца:', err);
-        this.pet = null;
-        this.errorMessage = err.message;
-      } finally {
-        this.loading = false;
+methods: {
+  async fetchPet(petId) {
+    try {
+      // Преобразуем petId в число, если это необходимо
+      const numericPetId = parseInt(petId, 10);
+
+      const response = await fetch(`${this.backendUrl}/api/view-pet/${numericPetId}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
       }
-    },
+      const data = await response.json();
+      this.pet = data;
+    } catch (err) {
+      console.error('Ошибка при получении данных питомца:', err);
+      this.pet = null;
+      this.errorMessage = err.message;
+    } finally {
+      this.loading = false;
+    }
   },
+},
 };
 </script>
 <style scoped>
