@@ -50,78 +50,78 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      isAuthenticated: false,
-      username: ''
-    };
-  },
-  created() {
-    this.checkAuth();
-  },
-  methods: {
-    async checkAuth() {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        this.isAuthenticated = false;
-        this.username = '';
-        return;
-      }
+  export default {
+    data() {
+      return {
+        isAuthenticated: false,
+        username: ''
+      };
+    },
+    created() {
+      this.checkAuth();
+    },
+    methods: {
+      async checkAuth() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          this.isAuthenticated = false;
+          this.username = '';
+          return;
+        }
 
-      try {
-        const response = await fetch('https://node-production-579e.up.railway.app/auth/check', {
-          headers: {
-            'Authorization': `Bearer ${token}`
+        try {
+          const response = await fetch('https://node-production-579e.up.railway.app/auth/check', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            this.isAuthenticated = true;
+            this.username = data.username || 'Пользователь';
+          } else {
+            console.error('Токен недействителен');
+            localStorage.removeItem('token');
+            this.isAuthenticated = false;
+            this.username = '';
           }
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          this.isAuthenticated = true;
-          this.username = data.username || 'Пользователь';
-        } else {
-          console.error('Токен недействителен');
+        } catch (err) {
+          console.error('Ошибка проверки авторизации:', err);
           localStorage.removeItem('token');
           this.isAuthenticated = false;
           this.username = '';
         }
-      } catch (err) {
-        console.error('Ошибка проверки авторизации:', err);
-        localStorage.removeItem('token');
-        this.isAuthenticated = false;
-        this.username = '';
-      }
-    },
-    async logout() {
-      try {
-        const response = await fetch('https://node-production-579e.up.railway.app/auth/logout', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
+      },
+      async logout() {
+        try {
+          const response = await fetch('https://node-production-579e.up.railway.app/auth/logout', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          });
 
-        if (response.ok) {
+          if (response.ok) {
+            localStorage.removeItem('token');
+            this.isAuthenticated = false;
+            this.username = '';
+            this.$router.push('/');
+          } else {
+            console.error('Сервер вернул ошибку при выходе');
+          }
+        } catch (err) {
+          console.error('Ошибка выхода:', err);
+
+          // Если возникла ошибка, все равно очищаем токен
           localStorage.removeItem('token');
           this.isAuthenticated = false;
           this.username = '';
           this.$router.push('/');
-        } else {
-          console.error('Сервер вернул ошибку при выходе');
         }
-      } catch (err) {
-        console.error('Ошибка выхода:', err);
-
-        // Если возникла ошибка, все равно очищаем токен
-        localStorage.removeItem('token');
-        this.isAuthenticated = false;
-        this.username = '';
-        this.$router.push('/');
       }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>

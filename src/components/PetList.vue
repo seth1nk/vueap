@@ -11,10 +11,10 @@
             <th>Вид</th>
             <th>Возраст</th>
             <th>Пол</th>
-            <th>Описание</th>
             <th>Цена (₽)</th>
             <th>Доступен</th>
             <th>Изображение</th>
+            <th>Действия</th>
           </tr>
         </thead>
         <tbody>
@@ -24,7 +24,6 @@
             <td>{{ pet.species }}</td>
             <td>{{ pet.age }}</td>
             <td>{{ pet.gender }}</td>
-            <td>{{ pet.description || 'N/A' }}</td>
             <td>{{ pet.price }} ₽</td>
             <td>
               <span :class="['status', pet.available ? 'available' : 'unavailable']">
@@ -37,6 +36,11 @@
                    alt="Pet Image"
                    class="pet-image" />
               <span v-else>N/A</span>
+            </td>
+            <td>
+              <button class="action-button" @click="viewPet(pet._id)">
+                <i class="fas fa-eye"></i>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -52,55 +56,59 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      pets: [],
-      currentPage: 1,
-      pageSize: 10,
-      backendUrl: 'https://node-production-579e.up.railway.app',
-    };
-  },
-  computed: {
-    paginatedPets() {
-      const start = (this.currentPage - 1) * this.pageSize;
-      const end = start + this.pageSize;
-      return this.pets.slice(start, end);
+  export default {
+    data() {
+      return {
+        pets: [],
+        currentPage: 1,
+        pageSize: 10,
+        backendUrl: 'https://node-production-579e.up.railway.app',
+      };
     },
-    totalPages() {
-      return Math.ceil(this.pets.length / this.pageSize);
+    computed: {
+      paginatedPets() {
+        const start = (this.currentPage - 1) * this.pageSize;
+        const end = start + this.pageSize;
+        return this.pets.slice(start, end);
+      },
+      totalPages() {
+        return Math.ceil(this.pets.length / this.pageSize);
+      },
     },
-  },
-  async created() {
-    await this.fetchPets();
-  },
-  methods: {
-    async fetchPets() {
-      try {
-        const response = await fetch('https://node-production-579e.up.railway.app/api/pets');
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+    async created() {
+      await this.fetchPets();
+    },
+    methods: {
+      async fetchPets() {
+        try {
+          const response = await fetch('https://node-production-579e.up.railway.app/api/pets');
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+          console.log('Fetched pets:', data);
+          this.pets = data;
+        } catch (err) {
+          console.error('Error fetching pets:', err);
         }
-        const data = await response.json();
-        console.log('Fetched pets:', data);
-        this.pets = data;
-      } catch (err) {
-        console.error('Error fetching pets:', err);
-      }
+      },
+      prevPage() {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+        }
+      },
+      nextPage() {
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+        }
+      },
+      viewPet(petId) {
+        this.$router.push(`/view-pet/${petId}`);
+      },
     },
-    prevPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    },
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-      }
-    },
-  },
-};
+  };
 </script>
+
 <style scoped>
   /* Общий контейнер */
   .app-container {
@@ -129,7 +137,7 @@ export default {
     max-width: 1200px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    border-radius: 16px; /* Закругленные углы контейнера */
+    border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     padding: 20px;
@@ -138,16 +146,15 @@ export default {
   /* Стиль для таблицы */
   .styled-table {
     width: 100%;
-    border-collapse: separate; /* Разделяем границы ячеек */
+    border-collapse: separate;
     border-spacing: 0;
-    border-radius: 16px; /* Закругленные углы таблицы */
+    border-radius: 16px;
     overflow: hidden;
     margin-top: 20px;
   }
 
-    /* Стиль для заголовков таблицы */
     .styled-table th {
-      background: linear-gradient(135deg, #c70039, #800040); /* Градиент для заголовков */
+      background: linear-gradient(135deg, #c70039, #800040);
       color: #ffffff;
       font-weight: bold;
       padding: 15px;
@@ -156,9 +163,8 @@ export default {
       border-right: none;
     }
 
-    /* Стиль для обычных ячеек */
     .styled-table td {
-      background: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый фон */
+      background: rgba(255, 255, 255, 0.1);
       color: #ffffff;
       padding: 15px;
       text-align: center;
@@ -166,20 +172,17 @@ export default {
       border-right: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-      /* Убираем правую границу у последнего столбца */
       .styled-table th:last-child,
       .styled-table td:last-child {
         border-right: none;
       }
 
-    /* Убираем нижнюю границу у последней строки */
     .styled-table tbody tr:last-child td {
       border-bottom: none;
     }
 
-    /* Эффект при наведении на строку */
     .styled-table tbody tr:hover {
-      background-color: rgba(255, 255, 255, 0.05); /* Легкий затемненный фон */
+      background-color: rgba(255, 255, 255, 0.05);
       cursor: pointer;
     }
 
@@ -207,11 +210,11 @@ export default {
   }
 
     .status.available {
-      background: #32a852; /* Зеленый цвет для доступных питомцев */
+      background: #32a852;
     }
 
     .status.unavailable {
-      background: #c70039; /* Красный цвет для недоступных питомцев */
+      background: #c70039;
     }
 
   /* Стиль для пагинации */
@@ -241,4 +244,18 @@ export default {
       .pagination button:hover:not(:disabled) {
         background: rgba(255, 255, 255, 0.2);
       }
+
+  /* Стиль для кнопки действия */
+  .action-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+  }
+
+    .action-button:hover {
+      color: #0056b3;
+    }
 </style>
