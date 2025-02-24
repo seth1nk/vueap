@@ -216,3 +216,50 @@
   }
 
     .status.available {
+      background: #32a852;
+    }
+
+    .status.unavailable {
+      background: #c70039;
+    }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+    .pagination button {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+      .pagination button:disabled {
+        background: rgba(255, 255, 255, 0.05);
+        cursor: not-allowed;
+      }
+
+      .pagination button:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+  .action-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+  }
+
+    .action-button:hover {
+      color: #0056b3;
+    }
+</style>
