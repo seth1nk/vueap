@@ -6,8 +6,8 @@ import PetList from './components/PetList.vue';
 import PitanieList from './components/PitanieList.vue';
 import Login from './components/Login.vue';
 import Register from './components/Register.vue';
-import ViewPet from '@/components/ViewPet.vue';
-import ViewPitanie from '@/components/ViewPitanie.vue';
+import ViewPet from './components/ViewPet.vue';
+import ViewPitanie from './components/ViewPitanie.vue';
 
 const routes = [
   { path: '/', component: Home },
