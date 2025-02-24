@@ -46,18 +46,22 @@ export default {
 methods: {
   async fetchPet(petId) {
     try {
-      // Преобразуем petId в число, если это необходимо
       const numericPetId = parseInt(petId, 10);
+      console.log('Запрашиваем данные для питомца с ID:', numericPetId); // Логируем ID
 
       const response = await fetch(`${this.backendUrl}/api/view-pet/${numericPetId}`);
+      console.log('Ответ сервера:', response); // Логируем ответ сервера
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
       }
+
       const data = await response.json();
+      console.log('Полученные данные:', data); // Логируем данные
       this.pet = data;
     } catch (err) {
-      console.error('Ошибка при получении данных питомца:', err);
+      console.error('Ошибка при получении данных питомца:', err); // Логируем ошибку
       this.pet = null;
       this.errorMessage = err.message;
     } finally {
