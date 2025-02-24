@@ -40,20 +40,23 @@
       const petId = this.$route.params.id;
       await this.fetchPet(petId);
     },
-    methods: {
-      async fetchPet(petId) {
-        try {
-          const response = await fetch(`${this.backendUrl}/api/view-pet/${petId}`);
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          const data = await response.json();
-          this.pet = data;
-        } catch (err) {
-          console.error('Ошибка при получении данных питомца:', err);
-        }
-      },
-    },
+   methods: {
+  async fetchPet(petId) {
+    try {
+      const response = await fetch(`${this.backendUrl}/api/view-pet/${petId}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      this.pet = data;
+    } catch (err) {
+      console.error('Ошибка при получении данных питомца:', err);
+      this.pet = null;
+    } finally {
+      this.loading = false;
+    }
+  },
+},
   };
 </script>
 
