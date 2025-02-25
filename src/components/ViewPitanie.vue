@@ -29,132 +29,139 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        product: null,
-        backendUrl: 'https://node-production-579e.up.railway.app',
-      };
-    },
-    async created() {
-      const productId = this.$route.params.id;
-      await this.fetchProduct(productId);
-    },
-    methods: {
-      async fetchProduct(productId) {
-        try {
-          const response = await fetch(`${this.backendUrl}/api/view-pitanie/${productId}`);
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          const data = await response.json();
-          this.product = data;
-        } catch (err) {
-          console.error('Ошибка при получении данных продукта:', err);
+export default {
+  data() {
+    return {
+      product: null,
+      backendUrl: 'https://node-production-579e.up.railway.app',
+    };
+  },
+  async created() {
+    const productId = this.$route.params.id;
+    await this.fetchProduct(productId);
+  },
+  methods: {
+    async fetchProduct(productId) {
+      try {
+        const response = await fetch(`${this.backendUrl}/api/view-pitanie/${productId}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      },
+        const data = await response.json();
+        this.product = data;
+      } catch (err) {
+        console.error('Ошибка при получении данных продукта:', err);
+      }
     },
-  };
+  },
+};
 </script>
 
 <style scoped>
-  /* Стили для страницы просмотра продукта (аналогичны стилям для питомца) */
-  .app-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #800020, #400020);
-    color: #ffffff;
-    padding: 20px;
-  }
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #800020, #400020);
+  color: #ffffff;
+  padding: 20px;
+}
 
-  .page-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #ffffff;
-  }
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
 
-  .product-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
+.product-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 500px; /* Ограничение максимальной ширины контейнера */
+  width: 100%; /* Адаптивность для меньших экранов */
+}
 
-  .product-image-container img {
-    max-width: 200px;
-    max-height: 200px;
-    border-radius: 8px;
-  }
+.product-image-container img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 8px;
+}
 
-  .product-info {
-    text-align: center;
-  }
+.product-info {
+  text-align: center;
+  width: 100%; /* Занимает всю доступную ширину контейнера */
+  word-wrap: break-word; /* Перенос слов, если они слишком длинные */
+}
 
-  .status {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    color: #ffffff;
-  }
+.product-info p {
+  margin: 10px 0; /* Отступы между пунктами */
+}
 
-    .status.available {
-      background: #32a852;
-    }
+.status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #ffffff;
+}
 
-    .status.unavailable {
-      background: #c70039;
-    }
+.status.available {
+  background: #32a852;
+}
 
-  .action-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-  }
+.status.unavailable {
+  background: #c70039;
+}
 
-  .btn-secondary,
-  .btn-primary {
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
 
-  .btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: none;
-  }
+.btn-secondary,
+.btn-primary {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-  .btn-primary {
-    background: linear-gradient(135deg, #ffc107, #e0a800);
-    color: white;
-    border: none;
-  }
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+}
 
-  .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
+.btn-primary {
+  background: linear-gradient(135deg, #ffc107, #e0a800);
+  color: white;
+  border: none;
+}
 
-  .btn-primary:hover {
-    transform: translateY(-3px);
-    background: linear-gradient(135deg, #e0a800, #b38800);
-  }
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
 
-  .loading-message {
-    text-align: center;
-    font-size: 1.2rem;
-  }
+.btn-primary:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #e0a800, #b38800);
+}
+
+.loading-message {
+  text-align: center;
+  font-size: 1.2rem;
+}
 </style>
