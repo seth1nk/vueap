@@ -10,7 +10,8 @@
         <p><strong>Название:</strong> {{ product.name }}</p>
         <p><strong>Вид:</strong> {{ product.vid }}</p>
         <p><strong>Бренд:</strong> {{ product.brand }}</p>
-        <p><strong>Вес:</strong> {{ product.weight }} кг</p>
+        <p><strong>Вес:</strong> {{ product.weight }} г</p>
+        <p><strong>Описание:</strong> {{ product.description }}</p>
         <p><strong>Цена:</strong> {{ product.price }} ₽</p>
         <p>
           <strong>В наличии:</strong>
@@ -20,8 +21,7 @@
         </p>
       </div>
       <div class="action-buttons">
-        <button class="btn-secondary" @click="$router.push('/list-pitanie')">Вернуться к списку</button>
-        <button class="btn-primary" @click="$router.push(`/edit-pitanie/${product.id}`)">Редактировать</button>
+        <button class="btn-secondary" @click="$router.push('/pitanie')">Вернуться к списку</button>
       </div>
     </div>
     <p v-else class="loading-message">Загрузка данных...</p>
