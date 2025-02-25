@@ -13,6 +13,7 @@
         <p><strong>Вид:</strong> {{ pet.species }}</p>
         <p><strong>Возраст:</strong> {{ pet.age }} лет</p>
         <p><strong>Пол:</strong> {{ pet.gender }}</p>
+        <p><strong>Описание:</strong> {{ pet.description }}</p>
         <p><strong>Цена:</strong> {{ pet.price }} ₽</p>
         <p><strong>Доступен:</strong>
           <span :class="['status', pet.available ? 'available' : 'unavailable']">
