@@ -21,8 +21,7 @@
         </p>
       </div>
       <div class="action-buttons">
-        <button class="btn-secondary" @click="$router.push('/list-pets')">Вернуться к списку</button>
-        <button class="btn-primary" @click="$router.push(`/edit-pet/${pet.id}`)">Редактировать</button>
+        <button class="btn-secondary" @click="$router.push('/pets')">Вернуться к списку</button>
       </div>
     </div>
     <div v-else class="error-message">Не удалось загрузить данные о питомце.</div>
