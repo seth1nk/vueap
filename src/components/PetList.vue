@@ -38,7 +38,7 @@
               <span v-else>N/A</span>
             </td>
             <td>
-              <button class="action-button" @click="viewPet(pet._id)">
+              <button class="action-button" @click="viewPet(pet.id)">
                 <i class="fas fa-eye"></i>
               </button>
             </td>
