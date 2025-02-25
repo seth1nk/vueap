@@ -45,7 +45,7 @@
           <button @click="logout" class="button">Выйти</button>
         </li>
         <li v-if="isAuthenticated && role === 'admin'">
-          <router-link to="/admin" class="admin-button">Админ-панель</router-link>
+          <a href="https://node-production-579e.up.railway.app" class="admin-button">Админ-панель</a>
         </li>
       </ul>
     </nav>
@@ -58,7 +58,7 @@ export default {
     return {
       isAuthenticated: false,
       username: '',
-      role: '' // Добавляем поле для роли
+      role: ''
     };
   },
   created() {
@@ -85,7 +85,7 @@ export default {
           const data = await response.json();
           this.isAuthenticated = true;
           this.username = data.username || 'Пользователь';
-          this.role = data.role || ''; // Получаем роль из ответа сервера
+          this.role = data.role || '';
         } else {
           console.error('Токен недействителен');
           localStorage.removeItem('token');
@@ -179,16 +179,17 @@ export default {
   background: linear-gradient(135deg, #ff9800, #f57c00); /* Оранжевый градиент */
   color: white;
   text-decoration: none;
-  border-radius: 8px; /* Более скругленные углы */
+  border-radius: 8px;
   font-weight: bold;
-  text-transform: uppercase; /* Заглавные буквы */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень */
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  text-align: center; /* Выравнивание текста по центру */
 }
 
 .admin-button:hover {
-  background: linear-gradient(135deg, #f57c00, #e64a19); /* Более темный градиент */
-  transform: translateY(-2px); /* Лёгкий подъём при наведении */
+  background: linear-gradient(135deg, #f57c00, #e64a19);
+  transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
