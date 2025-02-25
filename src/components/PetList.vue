@@ -1,4 +1,5 @@
 <template>
+  <div>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <h1 class="container" style="display: inline-block;">Питомцы</h1>
     <div class="app-container">
