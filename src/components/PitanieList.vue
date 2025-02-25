@@ -84,7 +84,7 @@ export default {
   methods: {
     async fetchProducts() {
       try {
-        const response = await fetch(`${this.backendUrl}/api/pitanie`);
+        const response = await fetch(`${this.backendUrl}/api/pitanies`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
