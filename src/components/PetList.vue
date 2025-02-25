@@ -1,6 +1,5 @@
 <template>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <div>
     <h1 class="container" style="display: inline-block;">Питомцы</h1>
     <div class="app-container">
       <h1 class="page-title">Список питомцев</h1>
@@ -16,7 +15,7 @@
               <th>Цена (₽)</th>
               <th>Доступен</th>
               <th>Изображение</th>
-              <th>Действия</th>
+              <th class="actions-column">Действия</th>
             </tr>
           </thead>
           <tbody>
@@ -39,7 +38,7 @@
                      class="pet-image" />
                 <span v-else>N/A</span>
               </td>
-              <td>
+              <td class="actions-column">
                 <div class="action-button-container" @click="viewPet(pet.id)">
                   <i class="fas fa-eye"></i>
                 </div>
@@ -114,7 +113,7 @@ export default {
 </script>
 
 <style scoped>
-/* Общий контейнер */
+/* Подключение Font Awesome не нужно в template, убираем его оттуда и добавляем в public/index.html */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -126,7 +125,6 @@ export default {
   padding: 20px;
 }
 
-/* Стиль для заголовка */
 .page-title {
   text-align: center;
   font-size: 2rem;
@@ -135,7 +133,6 @@ export default {
   color: #ffffff;
 }
 
-/* Контейнер таблицы */
 .table-container {
   width: 100%;
   max-width: 1200px;
@@ -147,7 +144,6 @@ export default {
   padding: 20px;
 }
 
-/* Стиль для таблицы */
 .styled-table {
   width: 100%;
   border-collapse: separate;
@@ -190,6 +186,11 @@ export default {
   cursor: pointer;
 }
 
+/* Стиль для столбца "Действия" */
+.actions-column {
+  width: 70px; /* Уменьшенная ширина для предотвращения переноса текста */
+}
+
 /* Стиль для изображений питомцев */
 .pet-image {
   max-width: 100px;
@@ -197,14 +198,12 @@ export default {
   border-radius: 8px;
 }
 
-/* Выравнивание текста в заголовке "Нет доступных питомцев" */
 .no-pets-message {
   text-align: center;
   font-size: 1.2rem;
   margin-top: 20px;
 }
 
-/* Стиль для статуса доступности */
 .status {
   display: inline-block;
   padding: 5px 10px;
@@ -221,7 +220,6 @@ export default {
   background: #c70039;
 }
 
-/* Стиль для пагинации */
 .pagination {
   display: flex;
   justify-content: center;
@@ -256,18 +254,19 @@ export default {
   justify-content: center;
   width: 30px;
   height: 30px;
-  background-color: #007bff; /* Синий фон */
-  border-radius: 5px; /* Скругленные углы для квадрата */
+  background-color: #007bff;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 0 auto; /* Центрирование кнопки в столбце */
 }
 
 .action-button-container:hover {
-  background-color: #0056b3; /* Более тёмный синий при наведении */
+  background-color: #0056b3;
 }
 
 .action-button-container i {
-  color: #ffffff; /* Белый цвет иконки глаза */
-  font-size: 1rem; /* Размер иконки */
+  color: #ffffff;
+  font-size: 1rem;
 }
 </style>
